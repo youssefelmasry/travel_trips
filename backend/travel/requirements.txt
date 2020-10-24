@@ -25,3 +25,5 @@ traitlets==5.0.5
 wcwidth==0.2.5
 django-cors-headers==3.5.0
 djangorestframework-simplejwt==4.3.0
+social-auth-app-django==4.0.0
+social-auth-core==3.3.3
