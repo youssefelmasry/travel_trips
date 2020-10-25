@@ -17,21 +17,25 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = environ.Path(__file__) - 2
-environ.Env.read_env(env_file=BASE_DIR('.env'))
+env = environ.Env()
 
+env.read_env(env_file=BASE_DIR('.envs/.env.prod'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG")
+DEBUG = env.bool("DEBUG", False)
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(' ')
+ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(' ')
 # ALLOWED_HOSTS = ["localhost", '127.0.0.1']
 
+ADMIN_URL = env("ADMIN_URL")
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Application definition
 
@@ -84,17 +88,6 @@ WSGI_APPLICATION = 'travel.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.environ.get("DB_ENGINE"),
-#         'NAME': os.environ.get("DB_NAME"),
-#         'PORT': os.environ.get("DB_PORT"),
-#         'HOST': os.environ.get("DB_HOST"),
-#         # 'PASSWORD': os.environ.get("DB_PASSWORD"),
-#         # 'USER': os.environ.get("DB_USER")
-#     }
-# }
-env = environ.Env()
 DATABASES = {'default': env.db("DB_URL")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
@@ -117,6 +110,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# django-rest-framework
+# -------------------------------------------------------------------------------
+# django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -135,7 +139,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/staticfiles/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-
-AUTH_USER_MODEL = 'users.CustomUser'
+MEDIA_URL = "/mediafiles/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")

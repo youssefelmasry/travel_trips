@@ -1,0 +1,40 @@
+# pull official base image
+FROM python:3
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN mkdir -p /home/src
+# create the app user
+RUN useradd -ms /bin/bash app
+
+# set work directory
+ENV APP_CODE_HOME=/home/src/app_code
+RUN mkdir $APP_CODE_HOME
+RUN mkdir $APP_CODE_HOME/staticfiles
+RUN mkdir $APP_CODE_HOME/mediafiles
+WORKDIR $APP_CODE_HOME
+
+RUN apt-get update \
+  # dependencies for building Python packages
+  && apt-get install -y build-essential \
+  # psycopg2 dependencies
+  && apt-get install -y libpq-dev \
+  # Translations dependencies
+  && apt-get install -y gettext \
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
+
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt $APP_CODE_HOME
+RUN pip install -r requirements.txt
+
+# copy project
+COPY . $APP_CODE_HOME
+
+RUN chown -R app:app $APP_CODE_HOME
+
+USER app
