@@ -28,6 +28,8 @@ services:
             - 8000:8000
         env_file:
             - ./.envs/.env.local
+        stdin_open: true
+        tty: true
         depends_on:
             - db
 
