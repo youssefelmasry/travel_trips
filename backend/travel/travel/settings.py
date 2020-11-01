@@ -230,6 +230,9 @@ for key in ['GOOGLE_OAUTH2_KEY',
 # tokens to have enough permissions to get the user model updates / matching
 # working properly.
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email',
+}
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
 
 # config per http://psa.matiasaguirre.net/docs/configuration/django.html#django-admin
