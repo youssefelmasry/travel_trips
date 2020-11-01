@@ -20,10 +20,10 @@ class SignUpSerializerWithToken(serializers.ModelSerializer):
         return get_tokens_for_user(object)
 
     def create(self, validated_data):
-        user = get_user_model().objects.create(
+        user = get_user_model().objects.create_user(
             email=validated_data['email'],
+            password=validated_data['password']
         )
-        user.set_password(validated_data['password'])
         user.save()
         return user
 
