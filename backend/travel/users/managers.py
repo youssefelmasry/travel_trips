@@ -11,7 +11,7 @@ class CustomUserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, email, password, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         """Create and save user with given email and password."""
         fields_names = ["email", ]
         values = [email, ]
@@ -21,7 +21,8 @@ class CustomUserManager(BaseUserManager):
                 raise ValueError(_(f"The {field} must be set!"))
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)
+        if password:
+            user.set_password(password)
         user.save()
         return user
 
