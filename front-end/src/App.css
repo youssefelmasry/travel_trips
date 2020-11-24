@@ -1,0 +1,64 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.top-header{
+  background: linear-gradient(to right, #2193b0, #6dd5ed); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+height: 80px;
+place-content: space-evenly;
+}
+.navbar-logo{
+  color:white;
+  font-weight: bold;
+  font-size: 20px;
+text-decoration: none;
+}
+.navbar-logo ,.navigation{
+  
+  display: inline-block;
+}
+.navigation{
+  width:80%;
+}
+.Nav-desktop a {
+  color:white;
+  text-decoration: none;
+}
+.Nav-desktop{
+display: grid;
+font-weight: 700;
+
+list-style: none;
+grid-template-columns: max-content;
+grid-auto-flow: column;
+justify-content: end;
+column-gap: 5%;
+width: 80%;
+
+}.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+*{
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
