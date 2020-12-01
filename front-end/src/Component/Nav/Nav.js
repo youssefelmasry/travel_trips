@@ -16,7 +16,25 @@ import PersistentDrawerLeft from "./drawer"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
+let api_url = 'http://localhost:8000/api/'
 export default class Nav extends Component {
+    handleClick() {
+        const axios = require('axios');
+
+        axios.get(api_url)
+            .then(function (response) {
+                // handle success
+                console.log(response);
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+    }
+
     renderContent = () => {
         if (isMobile) {
             return <div>   <Router>
@@ -50,9 +68,13 @@ export default class Nav extends Component {
                 </nav>
 
             </Router>
+            <button onClick={this.handleClick}>
+                Test Backend
+            </button>
 
 
         </AppBar>
+
         </div>
 
     }
@@ -60,6 +82,5 @@ export default class Nav extends Component {
         return this.renderContent();
     }
 }
-
 
 

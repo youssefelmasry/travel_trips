@@ -1,9 +1,0 @@
-.devcontainer
-.env
-.vscode
-__pycache__/
-*.py[cod]
-*$py.class
-.envs/*
-!.envs/.env.example
-production.yml
