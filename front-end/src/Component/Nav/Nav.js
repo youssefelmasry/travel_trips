@@ -1,6 +1,7 @@
 import {
     BrowserRouter as Router,
-
+    Switch,
+    Route,
     Link
 } from "react-router-dom";
 import { menuItems } from './navitems';
@@ -15,8 +16,8 @@ import { Button, Drawer } from "@material-ui/core";
 import PersistentDrawerLeft from "./drawer"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-
 export default class Nav extends Component {
+
     renderContent = () => {
         if (isMobile) {
             return <div>   <Router>
@@ -48,11 +49,11 @@ export default class Nav extends Component {
 
                     </div>
                 </nav>
-
             </Router>
 
 
         </AppBar>
+
         </div>
 
     }
@@ -60,6 +61,7 @@ export default class Nav extends Component {
         return this.renderContent();
     }
 }
+
 
 
 

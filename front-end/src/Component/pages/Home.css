@@ -1,0 +1,25 @@
+.top-slider{
+    height: 80vh    ;
+    padding-right: 0!important;
+    padding-left: 0!important;
+}
+.slider-title{
+    color: white;
+    font-size: 85px;
+    text-shadow: 2px 2px black;
+
+
+}
+    .slider-content{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+    }
+
+    .grid{
+        padding:5% 20%;
+    }
+    .grid-left{
+        text-align: left;
+    }
