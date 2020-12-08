@@ -1,6 +1,7 @@
 import {
     BrowserRouter as Router,
-
+    Switch,
+    Route,
     Link
 } from "react-router-dom";
 import { menuItems } from './navitems';
@@ -15,26 +16,9 @@ import { Button, Drawer } from "@material-ui/core";
 import PersistentDrawerLeft from "./drawer"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-
-let api_url = 'http://localhost:8000/api/'
 export default class Nav extends Component {
-    handleClick() {
-        const axios = require('axios');
 
-        axios.get(api_url)
-            .then(function (response) {
-                // handle success
-                console.log(response);
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
-    }
-
+export default class Nav extends Component {
     renderContent = () => {
         if (isMobile) {
             return <div>   <Router>
@@ -66,7 +50,6 @@ export default class Nav extends Component {
 
                     </div>
                 </nav>
-
             </Router>
             <button onClick={this.handleClick}>
                 Test Backend
@@ -82,5 +65,6 @@ export default class Nav extends Component {
         return this.renderContent();
     }
 }
+
 
 

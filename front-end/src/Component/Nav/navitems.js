@@ -7,10 +7,12 @@ export const menuItems = [
         title : "Shop",
         url : "/shop",
         cName : "nav-link"
+
     },    {
         title : "Contact",
         url : "/contact",
         cName : "nav-link"
+
     }
 
 ]
