@@ -16,7 +16,6 @@ import { Button, Drawer } from "@material-ui/core";
 import PersistentDrawerLeft from "./drawer"
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-export default class Nav extends Component {
 
 export default class Nav extends Component {
     renderContent = () => {

@@ -1,6 +1,7 @@
 .devcontainer
 .env
 .vscode
+node_modules
 
 # backend
 
