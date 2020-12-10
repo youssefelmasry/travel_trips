@@ -1,6 +1,7 @@
 import {
     BrowserRouter as Router,
-
+    Switch,
+    Route,
     Link
 } from "react-router-dom";
 import { menuItems } from './navitems';
@@ -48,11 +49,14 @@ export default class Nav extends Component {
 
                     </div>
                 </nav>
-
             </Router>
+            <button onClick={this.handleClick}>
+                Test Backend
+            </button>
 
 
         </AppBar>
+
         </div>
 
     }

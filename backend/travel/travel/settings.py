@@ -33,6 +33,7 @@ DEBUG = env.bool("DEBUG", False)
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(' ')
 # ALLOWED_HOSTS = ["localhost", '127.0.0.1']
+CORS_ORIGIN_ALLOW_ALL = env.bool("CORS_ORIGIN_ALLOW_ALL", False)
 
 ADMIN_URL = env("ADMIN_URL")
 
