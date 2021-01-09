@@ -37,6 +37,8 @@ CORS_ORIGIN_ALLOW_ALL = env.bool("CORS_ORIGIN_ALLOW_ALL", False)
 
 ADMIN_URL = env("ADMIN_URL")
 
+BASE_URL = env("BASE_URL")
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Application definition
@@ -56,6 +58,10 @@ INSTALLED_APPS = [
 
     # Local
     'users.apps.UsersConfig',
+    'tour_app.apps.TourAppConfig',
+
+    # Third-party
+    "graphene_django",
 ]
 
 
@@ -68,6 +74,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ]
+}
+
+
+GRAPHENE = {
+    "SCHEMA": "travel.schema.schema"
 }
 
 
