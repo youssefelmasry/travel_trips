@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from graphene_django.views import GraphQLView
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
+    path("tours", csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
     path('api/', include('users.urls')),
 ]
 
