@@ -22,9 +22,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
-    path("tours", csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
+    path("tours/", csrf_exempt(GraphQLView.as_view(graphiql=settings.DEBUG))),
     path('api/', include('users.urls')),
 ]
 
 if bool(settings.DEBUG):
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
