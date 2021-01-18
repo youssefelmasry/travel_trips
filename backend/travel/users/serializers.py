@@ -1,18 +1,22 @@
 """Custom User serilazers."""
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, password_validation
 
 from .helper import get_tokens_for_user
 
 
 class CustomUserSerializer(serializers.HyperlinkedModelSerializer):
     """Serialize CustomUser Information into JSON."""
+
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email', 'password']
+        fields = ['id', 'email', 'password', 'first_name',
+                  'last_name', 'photo']
 
 
 class SignUpSerializerWithToken(serializers.ModelSerializer):
+    """SignUp a user and get access token."""
+
     password = serializers.CharField(write_only=True)
     token = serializers.SerializerMethodField()
 
