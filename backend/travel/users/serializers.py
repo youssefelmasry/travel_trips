@@ -1,18 +1,22 @@
 """Custom User serilazers."""
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, password_validation
 
 from .helper import get_tokens_for_user
 
 
 class CustomUserSerializer(serializers.HyperlinkedModelSerializer):
     """Serialize CustomUser Information into JSON."""
+
     class Meta:
         model = get_user_model()
-        fields = ['id', 'email', 'password']
+        fields = ['id', 'email', 'password', 'first_name',
+                  'last_name', 'photo']
 
 
 class SignUpSerializerWithToken(serializers.ModelSerializer):
+    """SignUp a user and get access token."""
+
     password = serializers.CharField(write_only=True)
     token = serializers.SerializerMethodField()
 
@@ -30,6 +34,26 @@ class SignUpSerializerWithToken(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ['token', 'email', 'password', ]
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.CharField(max_length=300, required=True)
+    password = serializers.CharField(required=True, write_only=True)
+
+
+class PasswordChangeSerializer(serializers.Serializer):
+    current_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+    def validate_current_password(self, value):
+        if not self.context['request'].user.check_password(value):
+            raise serializers.ValidationError(
+                'Current password does not match')
+        return value
+
+    def validate_new_password(self, value):
+        password_validation.validate_password(value)
+        return value
 
 
 class SocialSerializer(serializers.Serializer):

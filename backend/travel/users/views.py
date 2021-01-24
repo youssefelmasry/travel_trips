@@ -3,15 +3,21 @@ from django.conf import settings
 
 from rest_framework import status
 from rest_framework import viewsets
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, logout
 from rest_framework.permissions import IsAuthenticated, AllowAny, SAFE_METHODS
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from requests.exceptions import HTTPError
 from social_django.utils import psa
 
-from .serializers import CustomUserSerializer, SignUpSerializerWithToken, SocialSerializer
+from .serializers import (CustomUserSerializer,
+                          SignUpSerializerWithToken,
+                          SocialSerializer,
+                          LoginSerializer,
+                          PasswordChangeSerializer)
+from .helper import get_and_authenticate_user
 from .helper import get_tokens_for_user
 
 
@@ -23,9 +29,15 @@ class CustomUserViewSet(viewsets.ModelViewSet):
     .partial_update(),and .destroy() actions for CustomUser model.
     """
     queryset = get_user_model().objects.all()
+    serializer_classes = {
+        'login': LoginSerializer,
+        'password_change': PasswordChangeSerializer,
+    }
 
     def get_serializer_class(self):
-        if self.request.method in SAFE_METHODS:
+        if self.action in self.serializer_classes.keys():
+            return self.serializer_classes[self.action]
+        elif self.request.method in SAFE_METHODS:
             return CustomUserSerializer
         else:
             return SignUpSerializerWithToken
@@ -36,6 +48,30 @@ class CustomUserViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [AllowAny]
         return [permission() for permission in permission_classes]
+
+    @action(methods=['POST', ], detail=False)
+    def login(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = get_and_authenticate_user(**serializer.validated_data)
+        data = CustomUserSerializer(user).data
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(methods=['POST', ], detail=False)
+    def logout(self, request):
+        logout(request)
+        data = {'success': 'Sucessfully logged out'}
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(methods=['POST'],
+            detail=False,
+            permission_classes=[IsAuthenticated, ])
+    def password_change(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        request.user.set_password(serializer.validated_data['new_password'])
+        request.user.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(http_method_names=['POST'])
