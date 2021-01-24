@@ -18,7 +18,7 @@ def get_upload_path(instance, filename):
     Creates image upload path dynamicly, depending on the uploading model.
     """
     model = instance.__class__
-    name = model.Meta.verbose_name_plural.replace(' ', '_')
+    name = model._meta.verbose_name_plural.replace(' ', '_')
     filename = str(instance)
     return f'static/{name}/images/{filename}'
 
