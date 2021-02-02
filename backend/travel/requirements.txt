@@ -11,6 +11,8 @@ Django==3.0.5
 django-cors-headers==3.5.0
 django-environ==0.4.5
 django-filter==2.4.0
+django-graphql-jwt==0.3.1
+django-graphql-social-auth==0.1.4
 django-redis==4.12.1
 djangorestframework==3.12.1
 djangorestframework-simplejwt==4.6.0
@@ -28,13 +30,14 @@ oauthlib==3.1.0
 parso==0.7.1
 pexpect==4.8.0
 pickleshare==0.7.5
+Pillow==8.1.0
 promise==2.3
 prompt-toolkit==3.0.8
 psycopg2-binary==2.8.6
 ptyprocess==0.6.0
 pycparser==2.20
 Pygments==2.7.1
-PyJWT==2.0.0
+PyJWT==1.7.1
 pymongo==3.11.0
 python3-openid==3.2.0
 pytz==2020.1

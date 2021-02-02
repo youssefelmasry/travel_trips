@@ -87,3 +87,11 @@ class TourReview(models.Model):
     def __str__(self):
         return str(self.pk)
     
+class TourCart(models.Model):
+    tour = models.ForeignKey('tour_app.tour', on_delete=models.CASCADE, related_name="tour_cart")
+    user = models.ForeignKey('users.customuser', on_delete=models.CASCADE, related_name="tour_cart")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)

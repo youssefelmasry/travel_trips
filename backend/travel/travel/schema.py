@@ -1,6 +1,10 @@
-from tour_app.graphql.query import *
+from users.graphql.schema import UserMutation, graphene, UserQuery
+from tour_app.graphql.schema import TourQuery, TourMutation
 
-class RootTourQuery(TourQuery):
+class RootMutation(UserMutation, TourMutation):
     pass
 
-schema = graphene.Schema(query=RootTourQuery)
+class RootQuery(TourQuery, UserQuery):
+    pass
+
+schema = graphene.Schema(query=RootQuery, mutation=RootMutation)

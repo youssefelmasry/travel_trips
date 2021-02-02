@@ -2,7 +2,9 @@
 .env
 .vscode
 node_modules
-
+*.jpg
+*.png
+*.jpeg
 # backend
 
 __pycache__/
