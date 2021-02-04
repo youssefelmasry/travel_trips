@@ -4,6 +4,10 @@ from tour_app.models import *
 from django.conf import settings
 
 
+class TourCartType(DjangoObjectType):
+    class Meta:
+        model = TourCart
+
 class TourDetailsType(DjangoObjectType):
     class Meta:
         model = TourDetails
@@ -20,6 +24,18 @@ class TourGalleryType(DjangoObjectType):
     def resolve_media_file(self, info):
         base_url = settings.BASE_URL
         return f"{base_url}{self.media_file.url}"
+
+class TourIncludesExcludesType(DjangoObjectType):
+    class Meta:
+        model = TourIncludesAndExcludes
+
+class TourMapType(DjangoObjectType):
+    class Meta:
+        model = TourMap
+
+class TourJourneyType(DjangoObjectType):
+    class Meta:
+        model = TourJourney
 
 class TourType(DjangoObjectType):
     average_rating = graphene.String(source='get_average_rating')
